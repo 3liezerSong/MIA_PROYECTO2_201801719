@@ -1,0 +1,98 @@
+#Calificacion MIA 2022 - PROYECTO 2
+# --- PARTE 1 ---
+#CREACION DE DISCOS
+mkdisk -size=112 -unit=M -path=/home/parte2/disco.dk
+mkdisk -size=1 -path=/home/parte1/eliminar.dk
+pause
+#ELIMINACION DE DISCOS
+#Debe de dar error por que no existe disco con ese nombre
+rmdisk -path=/home/a eliminar disco/no_existo.dk
+rmdisk -path=/home/parte1/eliminar.dk
+pause
+#CREACION DE PARTICIONES
+#Debe dar error por que no existe particion extendida
+fdisk -type=L -unit=M -name=PartX -size=5 -path=/home/parte2/disco.dk
+fdisk -type=P -unit=M -name=Part1 -size=25 -path=/home/parte2/disco.dk
+fdisk -type=P -unit=M -name=Part2 -size=25 -path=/home/parte2/disco.dk
+fdisk -type=P -unit=M -name=Part3 -size=25 -path=/home/parte2/disco.dk
+fdisk -type=E -unit=M -name=Part4 -size=25 -path=/home/parte2/disco.dk
+fdisk -type=L -unit=M -name=Part5 -size=5 -path=/home/parte2/disco.dk
+fdisk -type=L -unit=M -name=Part6 -size=5 -path=/home/parte2/disco.dk
+pause
+#MOUNT CARNET DE EJEMPLO 201801719
+#191A
+mount -path=/home/parte2/disco.dk -name=Part1
+#192A
+mount -path=/home/parte2/disco.dk -name=Part2
+#193A
+mount -path=/home/parte2/disco.dk -name=Part3
+pause
+#REPORTE DISCO
+rep -id=191A -Path=/home/parte1/disco.dot -name=disk
+pause
+# --- PARTE 2 ---
+#MKFS A PARTICIONES
+mkfs -type=fast -id=191A
+pause
+#REPORTES INICIALES
+rep -id=191A -Path="/home/parte2/tree_1.dot" -name=tree
+pause
+#INICIO DE SESION
+#Debe dar error porque no existe el usuario roca
+Login -password=567 -usuario=roca -id=191A
+#Debe dar error porque no existe usuario logeado
+logout
+Login -password=123 -usuario=root -id=191A
+pause
+#CREACION DE GRUPOS
+mkgrp -naMe=Archivos
+mkgrp -NamE=Arqui
+mkgrp -name="Compi 2"
+pause
+#REPORTES FILE
+rep -id=191A -Path="/home/parte2/users_1.dot" -ruta="/users.txt" -name=file
+pause
+#CREACION DE USUARIOS
+Mkusr -usuario="user1" -grp=root -pwd=user1
+Mkusr -usuario="user2" -grp="Compi 2" -pwd=user2
+Mkusr -usuario="user3" -grp="Compi 2" -pwd=user3
+pause
+#ELIMINACION DE USUARIOS
+rmusr -usuario=user3
+pause
+#REPORTES FILE
+rep -id=191A -Path="/home/parte2/users_2.dot" -ruta="/users.txt" -name=file
+pause
+#CREACION DE CARPETAS
+mkdir -p -path=/home/archivos/mia/fase2
+mkdir -p -path=/home/archivos/mia/carpeta2
+mkdir -p -path=/home/archivos/mia/z
+mkdir -p -path=/home/archivos/mia/carpeta2/a1
+mkdir -p -path=/home/archivos/mia/carpeta2/a2
+mkdir -p -path=/home/archivos/mia/carpeta2/a3
+pause
+#REPORTES TREE
+rep -id=191A -Path="/home/parte2/tree_2.dot" -name=tree
+pause
+#CREACION DE ARCHIVOS
+mkfile -path=/home/b1.txt -size=15 -cont="Buenas" -r
+mkfile -path=/home/b2.txt -size=15 -r
+mkfile -path=/home/b3.txt -size=15 -r
+#Debe dar error ruta no existe
+#mkfile -path=/home/Noexiste/c1.txt -size=25
+pause
+#Debe dar error size negativo
+#mkfile -path=/home/d1.txt -size=-25
+pause
+#REPORTES TREE
+rep -id=191A -Path="/home/parte2/tree_3.dot" -name=tree
+pause
+mkfile -cont="/home/entrada.txt" -path="/home/bcont.txt"
+pause
+#REPORTES TREE
+rep -id=191A -Path="/home/parte2/tree_4.dot" -name=tree
+#REPORTES FILE
+rep -id=191A -Path="/home/parte2/users_3.txt" -ruta="/home/entrada.txt" -name=file
+pause
+logout
+pause
